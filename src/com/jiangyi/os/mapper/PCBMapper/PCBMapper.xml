@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiangyi.os.mapper.PCBMapper.PCBMapper">
+    <!--调用存储过程-->
+    <select id="UsePrioritySchedue"  statementType="CALLABLE">
+		{call simulate_thread()}
+	</select>
+
+    <!--在调用完存储过程后从结果表中拿到统计数据-->
+  <select id="getPriorityScheduleResult" resultType="com.jiangyi.os.pojo.PCB">
+      select threadNo,priorityNum,useTime,needTime,threadStatus from thread  ;
+  </select>
+    <!--添加进程信息到thread表（方便以后查询)-->
+    <insert id="addPCBToThread" parameterType="com.jiangyi.os.pojo.PCB">
+        insert into thread values (#{threadNo},#{priorityNum},#{useTime},#{needTime},#{threadStatus})
+    </insert>
+    <!--添加进程信息到就绪对列中-->
+    <insert id="addPCBToReadyQue" parameterType="com.jiangyi.os.pojo.PCB">
+        insert into readyQue values (#{threadNo},#{priorityNum},#{useTime},#{needTime},#{threadStatus})
+    </insert>
+    <!--清除进程表-->
+    <delete id="deleteThreadTable">
+        delete from thread
+    </delete>
+    <!--清除就绪对垒-->
+    <delete id="deleteReadyQueTable">
+        delete from readyQue
+    </delete>
+</mapper>
