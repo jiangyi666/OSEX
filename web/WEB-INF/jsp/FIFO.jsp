@@ -59,12 +59,13 @@
     </div>
     <div class="row clearfix">
         <div class="col-md-4 column">
-            请输入一个指令地址：&nbsp;&nbsp;
+            下一个指令地址：&nbsp;&nbsp;
            <font style="color:red;"><b>${tip}</b></font>
         </div>
         <div class="col-md-4 column">
             <div class="form-group">
-                <input type="text" class="form-control" id="orderAddress" value=""
+                <%--需要输入的指令--%>
+                <input type="text" class="form-control" id="orderAddress" value="${orderToInput}"
                        name="orderAddress">
             </div>
         </div>

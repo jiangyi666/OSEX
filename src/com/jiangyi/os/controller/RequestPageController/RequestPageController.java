@@ -25,6 +25,11 @@ public class RequestPageController {
     Page page=new Page();
     //提示
     String tip=null;
+    //需要输入的指令队列
+    String orderAddToInput[] = new String[]{"070", "050", "015", "021", "056", "040"
+            , "053", "023", "037", "078", "001", "084"};
+    //用来获得指令
+    int p=0;
 
     /**
      * 前端提交一个指令地址就可以了
@@ -91,7 +96,7 @@ public class RequestPageController {
                 tip="此指令页号为"+commitOrder.getPageNum()+",此页面已被调入内存中！";
             }
         }
-
+        p++;//取下一个指令
         return "OK";
     }
 
@@ -111,6 +116,14 @@ public class RequestPageController {
         //***********返回的内容看情况，可选list/pageQueue**********
         model.addAttribute("pageQueue",list);//把主存中的页面信息回显给前端显示
         model.addAttribute("tip",tip);//把提示信息回显给前端
+        if (p<orderAddToInput.length){//如果指令还没有到达最后一个
+            model.addAttribute("orderToInput",orderAddToInput[p]);//把需要的指令返回给前端用来输入。。。
+            System.out.println("执行指令的地址为："+orderAddToInput[p]);
+        }else {//指令到达最后一个
+            model.addAttribute("orderToInput","指令已经到达最后一个！");
+            System.out.println("指令已经到达最后一个！");
+        }
+
         return "FIFO";
     }
 
